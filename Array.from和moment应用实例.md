@@ -85,3 +85,47 @@ moment().subtract(amount, unit);
 
 `subtract` 方法返回一个新的 moment 对象，表示减去指定时间段后的时间。原始的 moment 对象不会被修改，而是返回一个新的 moment 对象，以保持 moment.js 的不可变性。
 
+
+
+
+
+
+
+
+
+## 实战练习：设置antd的datepicker只能选择当前月的1号往前推2个月，直到今天
+
+
+
+```jsx
+import React from 'react';
+import { DatePicker } from 'antd';
+import moment from 'moment';
+
+const MyDatePicker = () => {
+  const disabledDate = (current) => {
+    // 获取当前日期
+    const today = moment();
+
+    // 获取当前月的 1 号
+    const firstDayOfMonth = moment().startOf('month');
+
+    // 获取两个月前的日期
+    const twoMonthsAgo = moment().subtract(2, 'months');
+
+    // 禁用条件：当前日期大于今天，或者小于两个月前的日期，或者不是当前月的 1 号
+    return current > today || current < twoMonthsAgo || !current.isSame(firstDayOfMonth, 'day');
+  };
+
+  return (
+    <DatePicker
+      disabledDate={disabledDate}
+      // 其他属性根据需要进行设置
+    />
+  );
+};
+
+export default MyDatePicker;
+```
+
+
